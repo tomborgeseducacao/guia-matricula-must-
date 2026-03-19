@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia de Matrícula — MUST University</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #F5F5F0;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 1.5rem 1rem 4rem;
+    }
+
+    .wrap {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* HERO */
+    .hero {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #E5E5E0;
+    }
+    .hero-logo {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0F6E56;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.6;
+    }
+    .author-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1rem;
+      background: #F5F5F0;
+      border: 1px solid #E5E5E0;
+      border-radius: 99px;
+      padding: 5px 14px 5px 5px;
+    }
+    .av {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #E1F5EE;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600; color: #0F6E56;
+      flex-shrink: 0;
+    }
+    .author-name { font-size: 12px; color: #888; }
+    .author-name strong { color: #333; font-weight: 600; }
+
+    /* PROGRESS */
+    .progress-wrap { margin-top: 1.25rem; }
+    .pbg {
+      background: #E5E5E0;
+      border-radius: 99px;
+      height: 10px;
+      margin-bottom: 6px;
+      overflow: hidden;
+    }
+    .pfill {
+      height: 10px;
+      border-radius: 99px;
+      background: #1D9E75;
+      transition: width 0.5s ease;
+    }
+    .plabel { font-size: 13px; color: #888; }
+
+    /* ID SCREEN */
+    .id-screen {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid #E5E5E0;
+      margin-bottom: 1.25rem;
+    }
+    .id-title { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 8px; }
+    .id-sub { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1.5rem; }
+    .flabel { font-size: 13px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; }
+    .frow { margin-bottom: 1.25rem; }
+    input[type=text], input[type=tel] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #D5D5D0;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #111;
+      background: white;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input[type=text]:focus, input[type=tel]:focus {
+      border-color: #1D9E75;
+      box-shadow: 0 0 0 3px rgba(29,158,117,0.12);
+    }
+    .sbtn {
+      width: 100%;
+      padding: 14px;
+      background: #1D9E75;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sbtn:hover { background: #0F6E56; }
+    .ferr { font-size: 13px; color: #DC2626; margin-top: 8px; display: none; }
+
+    /* STEP CARDS */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      border: 1.5px solid #E5E5E0;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .card.active { border-color: #1D9E75; border-width: 2px; }
+    .card.done { opacity: 0.55; }
+
+    .cheader {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1.1rem 1.25rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .cheader:hover { background: #FAFAF8; }
+
+    .cnum {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 600;
+      flex-shrink: 0;
+    }
+    .cp { background: #F5F5F0; color: #999; border: 1.5px solid #E5E5E0; }
+    .ca { background: #E1F5EE; color: #0F6E56; }
+    .cdone { background: #E1F5EE; color: #0F6E56; font-size: 18px; }
+
+    .ctitle { font-size: 16px; font-weight: 600; color: #111; flex: 1; line-height: 1.4; }
+
+    .cbadge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .bw { background: #F5F5F0; color: #999; }
+    .bactive { background: #E1F5EE; color: #0F6E56; }
+    .bdone { background: #E1F5EE; color: #0F6E56; }
+    .balert { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+
+    .cbody {
+      padding: 0 1.25rem 1.5rem;
+      border-top: 1px solid #F0F0EC;
+    }
+    .cbody.hidden { display: none; }
+
+    /* BANNERS */
+    .banner-spam {
+      background: #FEF2F2;
+      border: 2px solid #EF4444;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .spam-icon { font-size: 28px; flex-shrink: 0; line-height: 1.2; }
+    .spam-title { font-size: 15px; font-weight: 600; color: #991B1B; margin-bottom: 6px; }
+    .spam-sub { font-size: 14px; color: #B91C1C; line-height: 1.6; }
+    .spam-steps { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+    .spam-step { display: flex; align-items: flex-start; gap: 9px; font-size: 14px; color: #B91C1C; line-height: 1.5; }
+    .spam-step-num {
+      background: #EF4444; color: white;
+      border-radius: 50%; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 1px;
+    }
+
+    .banner-prazo {
+      background: #FFFBEB;
+      border: 1.5px solid #F59E0B;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .prazo-icon { font-size: 26px; flex-shrink: 0; line-height: 1.2; }
+    .prazo-title { font-size: 15px; font-weight: 600; color: #92400E; margin-bottom: 4px; }
+    .prazo-sub { font-size: 14px; color: #B45309; line-height: 1.6; }
+    .prazo-sub b { color: #78350F; }
+
+    .banner-video {
+      background: #EFF6FF;
+      border: 1.5px solid #93C5FD;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+    }
+    .video-title { font-size: 14px; font-weight: 600; color: #1E40AF; margin-bottom: 10px; }
+    .vlink {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      padding: 10px 14px;
+      background: white;
+      border: 1px solid #BFDBFE;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #1D4ED8;
+      transition: background 0.15s;
+    }
+    .vlink:hover { background: #DBEAFE; }
+    .play {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: #3B82F6;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tri {
+      width: 0; height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 11px solid white;
+      margin-left: 3px;
+    }
+
+    /* SUB STEPS */
+    .substeps { display: flex; flex-direction: column; gap: 8px; margin: 1rem 0; }
+    .sstep {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 14px;
+      background: #F8F8F5;
+      border-radius: 10px;
+    }
+    .sstep-num {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: #1D9E75; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .sstep-text { font-size: 14px; color: #555; line-height: 1.6; }
+    .sstep-text strong { color: #111; font-weight: 600; }
+
+    /* TIP */
+    .tip {
+      background: #F8F8F5;
+      border-left: 3px solid #1D9E75;
+      padding: 10px 14px;
+      margin: 10px 0;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+    }
+    .tip strong { color: #111; font-weight: 600; }
+
+    .lbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #E1F5EE;
+      border: 1px solid #5DCAA5;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0F6E56;
+      text-decoration: none;
+      margin: 0.5rem 0;
+      transition: background 0.15s;
+    }
+    .lbtn:hover { background: #C5EBD9; }
+
+    .dbtn {
+      width: 100%;
+      padding: 15px;
+      background: #1D9E75;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.15s;
+    }
+    .dbtn:hover { background: #0F6E56; }
+    .sind { font-size: 13px; color: #888; margin-top: 8px; display: none; text-align: center; }
+
+    /* CONGRATS */
+    .congrats {
+      display: none;
+      background: #E1F5EE;
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .congrats-icon { font-size: 40px; margin-bottom: 12px; }
+    .congrats-title { font-size: 22px; font-weight: 700; color: #0F6E56; margin-bottom: 8px; }
+    .congrats-sub { font-size: 15px; color: #0F6E56; line-height: 1.7; }
+
+    /* CTA */
+    .cta {
+      margin-top: 1.5rem;
+      border: 1.5px solid #E5E5E0;
+      border-radius: 16px;
+      background: white;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .cta-av {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: #E1F5EE;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: #0F6E56;
+      flex-shrink: 0;
+    }
+    .cta-info { flex: 1; min-width: 120px; }
+    .cta-name { font-size: 15px; font-weight: 600; color: #111; margin-bottom: 2px; }
+    .cta-role { font-size: 13px; color: #888; }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1D9E75;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: #0F6E56; }
+    .wi { width: 18px; height: 18px; fill: white; flex-shrink: 0; }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 12px;
+      color: #BBB;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-logo">MUST University</div>
+    <div class="hero-title">Guia de Matrícula</div>
+    <div class="hero-sub">Siga cada passo com calma. Leia tudo antes de clicar em qualquer botão.</div>
+    <div class="author-badge">
+      <div class="av">TB</div>
+      <div class="author-name">Elaborado por <strong>Tom Borges</strong> · Consultor de Matrículas</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="pbg"><div class="pfill" id="prog" style="width:0%"></div></div>
+      <div class="plabel" id="prog-label">0 de 5 etapas concluídas</div>
+    </div>
+  </div>
+
+  <div id="id-screen" class="id-screen">
+    <div class="id-title">Olá! Vamos começar sua matrícula.</div>
+    <div class="id-sub">Preencha os campos abaixo. Seu progresso ficará salvo automaticamente.</div>
+    <label class="flabel" for="inp-nome">Seu nome completo</label>
+    <div class="frow"><input type="text" id="inp-nome" placeholder="Ex: Maria da Silva" autocomplete="name" /></div>
+    <label class="flabel" for="inp-wpp">Seu WhatsApp com DDD</label>
+    <div class="frow"><input type="tel" id="inp-wpp" placeholder="Ex: 11999990000" autocomplete="tel" /></div>
+    <div id="inp-err" class="ferr">Por favor, preencha seu nome e WhatsApp para continuar.</div>
+    <button class="sbtn" onclick="startGuia()">Começar o guia</button>
+  </div>
+
+  <div id="guia-steps" style="display:none">
+    <div class="steps">
+
+      <!-- ETAPA 1 -->
+      <div class="card active" id="card-0">
+        <div class="cheader" onclick="toggle(0)">
+          <div class="cnum ca" id="num-0">1</div>
+          <div class="ctitle">Procurar o e-mail com sua senha</div>
+          <span class="cbadge balert" id="badge-0">Prazo: 48h</span>
+        </div>
+        <div class="cbody" id="body-0">
+          <div class="banner-prazo">
+            <div class="prazo-icon">⏰</div>
+            <div>
+              <div class="prazo-title">Você tem até 48 horas para receber este e-mail</div>
+              <div class="prazo-sub">A MUST envia um e-mail com o assunto: <b>"Microsoft Azure AD Account credentials"</b>. Esse e-mail tem sua senha de acesso.</div>
+            </div>
+          </div>
+          <div class="banner-spam">
+            <div class="spam-icon">⚠️</div>
+            <div>
+              <div class="spam-title">Este e-mail geralmente cai no SPAM!</div>
+              <div class="spam-sub">Se não encontrar na caixa de entrada, siga estes passos:</div>
+              <div class="spam-steps">
+                <div class="spam-step"><div class="spam-step-num">1</div><span>Abra seu e-mail (Gmail, Hotmail etc.)</span></div>
+                <div class="spam-step"><div class="spam-step-num">2</div><span>Procure a pasta <strong>"Spam"</strong> ou <strong>"Lixo eletrônico"</strong> no menu lateral</span></div>
+                <div class="spam-step"><div class="spam-step-num">3</div><span>Procure pelo assunto: <strong>"Microsoft Azure AD Account credentials"</strong></span></div>
+                <div class="spam-step"><div class="spam-step-num">4</div><span>Ao encontrar, abra e clique em <strong>"Não é spam"</strong></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="tip"><strong>Dica:</strong> Se passar 48 horas e não encontrar nem no spam, fale com o Tom Borges pelo botão no final desta página.</div>
+          <div class="banner-video">
+            <div class="video-title">Assista este vídeo antes de continuar — é importante!</div>
+            <a class="vlink" href="https://youtu.be/IRgWZY2KEh0" target="_blank" rel="noopener">
+              <div class="play"><div class="tri"></div></div>
+              Vídeo: visão geral da sua matrícula
+            </a>
+          </div>
+          <button class="dbtn" onclick="markDone(0)">Encontrei o e-mail com minha senha</button>
+          <div class="sind" id="send-0"></div>
+        </div>
+      </div>
+
+      <!-- ETAPA 2 -->
+      <div class="card" id="card-1">
+        <div class="cheader" onclick="toggle(1)">
+          <div class="cnum cp" id="num-1">2</div>
+          <div class="ctitle">Criar sua senha e ativar a conta Microsoft</div>
+          <span class="cbadge bw" id="badge-1">Aguarde a etapa anterior</span>
+        </div>
+        <div class="cbody hidden" id="body-1">
+          <div class="banner-video">
+            <div class="video-title">Assista este vídeo antes de continuar — é importante!</div>
+            <a class="vlink" href="https://conteudo.mustedu.com/tutorial-microsoft-mustv2" target="_blank" rel="noopener">
+              <div class="play"><div class="tri"></div></div>
+              Vídeo: como ativar sua conta Microsoft
+            </a>
+          </div>
+          <div class="substeps">
+            <div class="sstep"><div class="sstep-num">1</div><div class="sstep-text">Abra o link <strong>login.microsoftonline.com</strong> no seu computador ou celular</div></div>
+            <div class="sstep"><div class="sstep-num">2</div><div class="sstep-text">Digite o e-mail e a senha que estão no e-mail que você recebeu</div></div>
+            <div class="sstep"><div class="sstep-num">3</div><div class="sstep-text">O sistema vai pedir para você <strong>criar uma nova senha</strong> — escolha uma que você vá lembrar e anote em algum lugar</div></div>
+            <div class="sstep"><div class="sstep-num">4</div><div class="sstep-text">O sistema vai pedir uma <strong>verificação por SMS</strong> — é só digitar o código que chegar no seu celular</div></div>
+            <div class="sstep"><div class="sstep-num">5</div><div class="sstep-text">Quando aparecer "Permanecer conectado?", clique em <strong>Sim</strong></div></div>
+          </div>
+          <div class="tip"><strong>Atenção:</strong> Se você já tiver uma conta Microsoft aberta no navegador, saia dela antes de fazer esse passo.</div>
+          <div class="tip"><strong>Importante:</strong> A partir de agora, toda comunicação da MUST será enviada para o seu novo e-mail <strong>@student.mustedu.com</strong>.</div>
+          <button class="dbtn" onclick="markDone(1)">Ativei minha conta Microsoft</button>
+          <div class="sind" id="send-1"></div>
+        </div>
+      </div>
+
+      <!-- ETAPA 3 -->
+      <div class="card" id="card-2">
+        <div class="cheader" onclick="toggle(2)">
+          <div class="cnum cp" id="num-2">3</div>
+          <div class="ctitle">Entrar no portal do aluno</div>
+          <span class="cbadge bw" id="badge-2">Aguarde a etapa anterior</span>
+        </div>
+        <div class="cbody hidden" id="body-2">
+          <div class="banner-video">
+            <div class="video-title">Assista este vídeo antes de continuar — é importante!</div>
+            <a class="vlink" href="https://conteudo.mustedu.com/tutorial-portal-aluno" target="_blank" rel="noopener">
+              <div class="play"><div class="tri"></div></div>
+              Vídeo: como acessar o portal do aluno
+            </a>
+          </div>
+          <div class="substeps">
+            <div class="sstep"><div class="sstep-num">1</div><div class="sstep-text">Clique no botão verde abaixo para abrir o portal</div></div>
+            <div class="sstep"><div class="sstep-num">2</div><div class="sstep-text">Na tela que abrir, clique em <strong>"Sign in with Microsoft"</strong></div></div>
+            <div class="sstep"><div class="sstep-num">3</div><div class="sstep-text">Use o e-mail e a senha que você acabou de criar</div></div>
+          </div>
+          <a class="lbtn" href="https://must.orbundsis.com/" target="_blank" rel="noopener">Abrir o portal do aluno</a>
+          <button class="dbtn" onclick="markDone(2)">Entrei no portal do aluno</button>
+          <div class="sind" id="send-2"></div>
+        </div>
+      </div>
+
+      <!-- ETAPA 4 -->
+      <div class="card" id="card-3">
+        <div class="cheader" onclick="toggle(3)">
+          <div class="cnum cp" id="num-3">4</div>
+          <div class="ctitle">Preencher e assinar o contrato</div>
+          <span class="cbadge bw" id="badge-3">Aguarde a etapa anterior</span>
+        </div>
+        <div class="cbody hidden" id="body-3">
+          <div class="banner-video">
+            <div class="video-title">Assista este vídeo antes de continuar — é importante!</div>
+            <a class="vlink" href="https://conteudo.mustedu.com/tutorial-contrato" target="_blank" rel="noopener">
+              <div class="play"><div class="tri"></div></div>
+              Vídeo: como preencher o contrato
+            </a>
+          </div>
+          <div class="substeps">
+            <div class="sstep"><div class="sstep-num">1</div><div class="sstep-text">Dentro do portal, localize a seção de <strong>documentos</strong> ou <strong>contrato</strong></div></div>
+            <div class="sstep"><div class="sstep-num">2</div><div class="sstep-text">Leia o contrato com calma antes de assinar</div></div>
+            <div class="sstep"><div class="sstep-num">3</div><div class="sstep-text">Preencha todos os campos obrigatórios e assine</div></div>
+            <div class="sstep"><div class="sstep-num">4</div><div class="sstep-text">Salve ou tire um print do contrato assinado para guardar</div></div>
+          </div>
+          <button class="dbtn" onclick="markDone(3)">Assinei o contrato</button>
+          <div class="sind" id="send-3"></div>
+        </div>
+      </div>
+
+      <!-- ETAPA 5 -->
+      <div class="card" id="card-4">
+        <div class="cheader" onclick="toggle(4)">
+          <div class="cnum cp" id="num-4">5</div>
+          <div class="ctitle">Pagar a taxa de matrícula</div>
+          <span class="cbadge bw" id="badge-4">Aguarde a etapa anterior</span>
+        </div>
+        <div class="cbody hidden" id="body-4">
+          <div class="banner-video">
+            <div class="video-title">Assista este vídeo antes de continuar — é importante!</div>
+            <a class="vlink" href="https://conteudo.mustedu.com/tutorial-pagamento" target="_blank" rel="noopener">
+              <div class="play"><div class="tri"></div></div>
+              Vídeo: como realizar o pagamento
+            </a>
+          </div>
+          <div class="substeps">
+            <div class="sstep"><div class="sstep-num">1</div><div class="sstep-text">Siga as instruções do vídeo para realizar o pagamento dentro do portal</div></div>
+            <div class="sstep"><div class="sstep-num">2</div><div class="sstep-text"><strong>Salve o comprovante</strong> de pagamento — você vai precisar no próximo passo</div></div>
+            <div class="sstep"><div class="sstep-num">3</div><div class="sstep-text">Envie o comprovante para o Tom Borges pelo botão do WhatsApp no final desta página</div></div>
+          </div>
+          <div class="tip"><strong>Por que enviar o comprovante?</strong> Quando o Tom recebe, ele confirma no sistema e libera seus acessos mais rápido.</div>
+          <button class="dbtn" onclick="markDone(4)">Paguei e enviei o comprovante</button>
+          <div class="sind" id="send-4"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="congrats" id="congrats">
+      <div class="congrats-icon">🎓</div>
+      <div class="congrats-title">Parabéns! Tudo pronto!</div>
+      <div class="congrats-sub">Você concluiu todas as etapas da sua matrícula.<br>Em breve seus acessos serão liberados.<br><br>Avise o Tom Borges pelo botão abaixo!</div>
+    </div>
+
+    <div class="cta">
+      <div class="cta-av">TB</div>
+      <div class="cta-info">
+        <div class="cta-name">Tom Borges</div>
+        <div class="cta-role">Consultor de Matrículas · MUST University</div>
+      </div>
+      <a class="cta-btn" id="cta-wpp" href="https://api.whatsapp.com/send?phone=5511939473816&text=GuiadeMatriculaConcluido" target="_blank" rel="noopener">
+        <svg class="wi" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Falar com Tom Borges
+      </a>
+    </div>
+
+    <div class="footer">MUST University® · Guia elaborado por Tom Borges</div>
+  </div>
+
+</div>
+
+<script>
+  const stepLabels = ['E-mail recebido','Conta Microsoft ativada','Portal acessado','Contrato assinado','Pagamento realizado'];
+  const total = 5;
+  let done = new Array(total).fill(false);
+  let open = new Array(total).fill(false);
+  let nome = '', wpp = '';
+  open[0] = true;
+
+  function startGuia() {
+    nome = document.getElementById('inp-nome').value.trim();
+    wpp = document.getElementById('inp-wpp').value.trim().replace(/\D/g, '');
+    const err = document.getElementById('inp-err');
+    if (!nome || wpp.length < 10) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    document.getElementById('id-screen').style.display = 'none';
+    document.getElementById('guia-steps').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggle(i) {
+    open[i] = !open[i];
+    document.getElementById('body-' + i).classList.toggle('hidden', !open[i]);
+  }
+
+  function markDone(i) {
+    done[i] = true;
+    document.getElementById('card-' + i).classList.remove('active');
+    document.getElementById('card-' + i).classList.add('done');
+    document.getElementById('num-' + i).className = 'cnum cdone';
+    document.getElementById('num-' + i).textContent = '✓';
+    document.getElementById('badge-' + i).className = 'cbadge bdone';
+    document.getElementById('badge-' + i).textContent = 'Concluído';
+    document.getElementById('body-' + i).classList.add('hidden');
+    open[i] = false;
+
+    const count = done.filter(Boolean).length;
+    document.getElementById('prog').style.width = Math.round((count / total) * 100) + '%';
+    document.getElementById('prog-label').textContent = count + ' de ' + total + ' etapas concluídas';
+
+    const next = i + 1;
+    if (next < total) {
+      document.getElementById('card-' + next).classList.add('active');
+      document.getElementById('num-' + next).className = 'cnum ca';
+      document.getElementById('badge-' + next).className = 'cbadge bactive';
+      document.getElementById('badge-' + next).textContent = 'Faça agora';
+      document.getElementById('body-' + next).classList.remove('hidden');
+      open[next] = true;
+      setTimeout(() => {
+        document.getElementById('card-' + next).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
+    }
+
+    if (count === total) {
+      document.getElementById('congrats').style.display = 'block';
+      const msg = 'GuiadeMatriculaConcluido - ' + nome + ' - ' + wpp;
+      document.getElementById('cta-wpp').href = 'https://api.whatsapp.com/send?phone=5511939473816&text=' + encodeURIComponent(msg);
+      setTimeout(() => {
+        document.getElementById('congrats').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  }
+</script>
+</body>
+</html>
